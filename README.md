@@ -18,14 +18,14 @@ in 2024-25 interviews and in production frontier models.
 
 ## Structure
 
-01-tokenizers/     BPE (byte-level), WordPiece, Unigram LM - from scratch
-02-attention/      Scaled dot-product, MHA, GQA - with and without RoPE  
-03-positional/     Learned absolute, RoPE, ALiBi - side by side
-04-normalization/  LayerNorm vs RMSNorm - derived and compared
-05-ffn/            GELU FFN vs SwiGLU - with gating mechanism explained
-06-training/       Backprop in numpy, AdamW, LR schedules, grad accumulation
-07-peft/           LoRA and QLoRA from scratch, rank ablations
-08-rlhf/           Reward model (Bradley-Terry), PPO with KL penalty
+- 01-tokenizers/     BPE (byte-level), WordPiece, Unigram LM - from scratch
+- 02-attention/      Scaled dot-product, MHA, GQA - with and without RoPE  
+- 03-positional/     Learned absolute, RoPE, ALiBi - side by side
+- 04-normalization/  LayerNorm vs RMSNorm - derived and compared
+- 05-ffn/            GELU FFN vs SwiGLU - with gating mechanism explained
+- 06-training/       Backprop in numpy, AdamW, LR schedules, grad accumulation
+- 07-peft/           LoRA and QLoRA from scratch, rank ablations
+- 08-rlhf/           Reward model (Bradley-Terry), PPO with KL penalty
 
 ## How to use it
 
