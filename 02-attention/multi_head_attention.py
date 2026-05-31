@@ -1,24 +1,36 @@
-"""Multi-head attention minimal implementation using numpy."""
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+from rope import precompute_freqs, apply_rope
 
-import numpy as np
-from typing import Optional
-
-from .scaled_dot_product import scaled_dot_product
-
-
-def multi_head_attention(q: np.ndarray, k: np.ndarray, v: np.ndarray, num_heads: int = 8, mask: Optional[np.ndarray] = None):
-    """Compute multi-head attention by splitting last dimension."""
-    batch, seq_len, d_model = q.shape
-    assert d_model % num_heads == 0
-    d_head = d_model // num_heads
-
-    def split_heads(x):
-        return x.reshape(batch, seq_len, num_heads, d_head).transpose(0,2,1,3)
-
-    qh = split_heads(q)
-    kh = split_heads(k)
-    vh = split_heads(v)
-
-    out = scaled_dot_product(qh, kh, vh, mask=None)
-    out = out.transpose(0,2,1,3).reshape(batch, seq_len, d_model)
-    return out
+class CausalSelfAttention(nn.Module):
+    def __init__(self, d_model: int, n_heads: int, dropout: float = 0.0):
+        """
+        Args:
+            d_model:  total embedding dimension
+            n_heads:  number of attention heads
+            dropout:  attention dropout probability
+            
+        Things to initialise:
+            - Q, K, V projections: Linear(d_model, d_model, bias=False)
+            - output projection:   Linear(d_model, d_model, bias=False)
+            - store n_heads, head_dim = d_model // n_heads
+        """
+        pass
+    
+    def forward(self, x: torch.Tensor, cos: torch.Tensor, sin: torch.Tensor):
+        """
+        Args:
+            x:   [B, T, d_model]
+            cos: precomputed RoPE cos frequencies
+            sin: precomputed RoPE sin frequencies
+        
+        Steps:
+            1. Project x to Q, K, V          each [B, T, d_model]
+            2. Split into heads              each [B, n_heads, T, head_dim]
+            3. Apply RoPE to Q and K only    (not V)
+            4. Scaled dot product attention  (use F.scaled_dot_product_attention)
+            5. Merge heads                   [B, T, d_model]
+            6. Output projection             [B, T, d_model]
+        """
+        pass
